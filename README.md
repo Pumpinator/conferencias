@@ -1,6 +1,6 @@
 # Sistema de Registro de Conferencias
 
-![alt text](https://i.imgur.com/OWtoyIp.png)
+![Aplicacion](https://i.imgur.com/OWtoyIp.png)
 
 Este proyecto es un sistema de registro de conferencias que permite a los alumnos registrarse para asistir a
 conferencias. Los alumnos ingresan sus datos, incluyendo su matrícula, al registrarse para una conferencia. En cada
@@ -29,14 +29,23 @@ tiempo real de bienvenida a todos los usuarios.
 - MySQL
 - WebSocket
 
+![Arquitectura](https://i.imgur.com/g5HxRj1.png)
+
 ## Instalación y Ejecución
 
-Para instalar y ejecutar este proyecto, primero debes clonar el repositorio en tu máquina local. Luego, navega hasta el
+Para instalar y ejecutar este proyecto, primero debes clonar el repositorio en tu máquina local. Luego, debes tener un servidor de MySQL ejecutando con un esquema por nombre 'conferenecias', navega hasta el
 directorio del proyecto y ejecuta los siguientes comandos en la terminal:
 
 ```bash
 mvn clean install
 mvn spring-boot:run
+```
+
+Si ocurre algun error al conectarse con la base de datos de debe modificar el application.properties de acuerdo a tus configuraciones de base de datos. Tabmién es recomendable reinicar el esquema.
+
+```sql
+DROP DATABASE IF EXISTS conferencias:
+CREATE DATABASE IF NOT EXISTS conferencias:
 ```
 
 Alternativamente, puedes ejecutar el proyecto con algunas extensiones de VS Code, o desde un IDE compatible con Maven,
