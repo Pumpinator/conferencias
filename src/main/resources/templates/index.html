@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="~{fragmentos :: head('Index')}"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="~{fragmentos :: nav}"></div>
+    <div class="text-center m-5">
+        <a class="btn btn-dark" th:href="@{/conferencias}"> Ver conferencias</a>
+    </div>
+    <div th:replace="~{fragmentos :: footer}"></div>
+</div>
+</body>
+</html>

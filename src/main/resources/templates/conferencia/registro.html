@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="~{fragmentos :: head('Registro')}"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="~{fragmentos :: nav}"></div>
+    <div class="container mt-3" id="hanging-icons">
+
+        <div class="text-center">
+            <h3 th:text="${'Registro para ' + conferencia.nombre}"></h3>
+            <p th:text="${#temporals.format(conferencia.fechaHora, 'dd/MM/yyyy - hh:mm') + ' hrs'}"></p>
+            <p>por [[${conferencia.conferencista.persona.nombres}]]
+                [[${conferencia.conferencista.persona.apellidos}]]</p>
+        </div>
+        <div>
+            <h3>Mis datos</h3>
+            <form method="POST" enctype="multipart/form-data" th:action="@{/conferencia/registrar}"
+                  th:object="${alumno}">
+                <input type="hidden" name="conferencia" th:value="${conferencia.id}">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label w-100">
+                            Matricula
+                            <input type="text" class="form-control" th:field="*{matricula}">
+                        </label>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <select class="form-select w-100" th:field="*{carrera}">
+                            <option disabled value="0">Elegir...</option>
+                            <th:block th:each="carrera : ${carreras}">
+                                <option th:value="${carrera.id}">[[${carrera.nombre}]]</option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-labe w-100">
+                            Nombres
+                            <input type="text" class="form-control" th:field="*{persona.nombres}" required>
+                        </label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label w-100">
+                            Apellidos
+                            <input type="text" class="form-control" th:field="*{persona.apellidos}" maxlength="64" required>
+                        </label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label w-100">
+                            Correo
+                            <input type="email" class="form-control" th:field="*{persona.email}" maxlength="64" required>
+                        </label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label w-100">
+                            Teléfono
+                            <input type="text" class="form-control" th:field="*{persona.telefono}" maxlength="10" required>
+                        </label>
+                    </div>
+                </div>
+                <div class="p-3 text-center">
+                    <button type="submit" class="btn btn-dark">Enviar</button>
+                    <a type="button" class="btn btn-secondary"
+                       th:href="@{'/conferencia/' + ${conferencia.id}}">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="~{fragmentos :: footer}"></div>
+</div>
+<script th:src="@{/js/registro.js}"></script>
+</body>
+</html>

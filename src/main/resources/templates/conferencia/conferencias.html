@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="~{fragmentos :: head('Conferencias')}"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="~{fragmentos :: nav}"></div>
+    <div class="container-fluid mt-3">
+        <ul>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
+                <th:block th:each="conferencia : ${conferencias}">
+                    <div class="col">
+                        <div class="card shadow-sm" >
+                            <img class="img-fluid" th:src="@{${conferencia.rutaFoto}}">
+                            <div class="card-header">
+                                <h1>[[${conferencia.nombre}]]</h1>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">por [[${conferencia.conferencista.persona.nombres}]] [[${conferencia.conferencista.persona.apellidos}]]</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-body-secondary" th:text="${#temporals.format(conferencia.fechaHora, 'dd/MM/yyyy - hh:mm') + ' hrs'}"></small>
+                                    <div class="btn-group">
+                                        <a class="btn btn-lg text-white" type="button" style="background-color: #169F8D" th:href="${'/conferencia/' + conferencia.id}">Detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </ul>
+    </div>
+    <div th:replace="~{fragmentos :: footer}"></div>
+</div>
+<script th:src="@{/js/socket.js}"></script></body>
+</html>

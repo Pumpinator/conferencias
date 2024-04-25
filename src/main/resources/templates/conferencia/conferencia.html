@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head th:replace="~{fragmentos :: head(${conferencia.nombre})}"></head>
+<body>
+<div class="container-fluid">
+    <div th:replace="~{fragmentos :: nav}"></div>
+    <div class="container px-4 py-5 mt-3" id="hanging-icons" style="background-color: #F2F2F2; border-radius: 20px">
+        <h2 class="pb-2 border-bottom" style="color: #169F8D; font-weight: bold">[[${conferencia.nombre}]]</h2>
+        <h4>[[${conferencia.conferencista.persona.nombres}]] [[${conferencia.conferencista.persona.apellidos}]]</h4>
+        <p th:text="${#temporals.format(conferencia.fechaHora, 'dd/MM/yyyy - hh:mm') + ' hrs'}"></p>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+            <div class="col-auto d-flex align-items-start">
+                <img class="img-fluid" th:src="@{${conferencia.rutaFoto}}">
+            </div>
+            <div class="col-auto row d-flex align-items-center">
+                <div class="col-6">
+                    <h3 class="h3">Comenzaremos en...</h3>
+                    <div id="clock" class="col text-center countdown"></div>
+                </div>
+                <div class="col-6 d-flex text-center">
+                    <div class="m-3">
+                        <a class="btn text-white" style="background-color: #169F8D"
+                           th:href="@{'/conferencia/' + ${conferencia.id} + '/registro'}">Registrarse</a>
+                    </div>
+                    <div class="m-3">
+                        <a class="btn text-white" style="background-color: #143373"
+                           th:href="@{/conferencias}">Volver</a>
+                    </div>
+                </div>
+                <div th:if="${conferencia.asistentes.size() > 0}" class="col-12 m-3">
+                    <h3 class="text-center">Asistentes</h3>
+                    <table class="table text-center mt-3">
+                        <thead>
+                        <tr>
+                            <th>Matricula</th>
+                            <th>Nombre Completo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="asistente : ${conferencia.asistentes}">
+                            <tr>
+                                <td th:text="${asistente.matricula}"></td>
+                                <td th:text="${asistente.persona.nombreCompleto}"></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <small th:if="${conferencia.asistentes.isEmpty()}" class="text-muted text-center">
+                    Aún no hay asistentes.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{fragmentos :: footer}"></div>
+<script type="text/javascript">
+    var endDate = "[[${#temporals.format(conferencia.fechaHora, 'yyyy/MM/dd HH:mm:ss')}]]";
+    $('#clock').countdown(endDate, function (event) {
+        $(this).html(event.strftime(''
+            + '<span class="h1 font-weight-bold">%H</span> horas'
+            + '<br>'
+            + '<span class="h1 font-weight-bold">%M</span> minutos'
+            + '<br>'
+            + '<span class="h1 font-weight-bold">%S</span> segundos'));
+    });
+</script>
+<script th:src="@{/js/socket.js}"></script>
+</body>
+</html>
